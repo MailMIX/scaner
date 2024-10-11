@@ -1,0 +1,49 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+	<title>Новый проект</title>
+	<defs>
+		<linearGradient id="g1" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(631.268,0,0,546.694,84.499,313.47)">
+			<stop offset="0" stop-color="#fdd9b5"/>
+			<stop offset="1" stop-color="#b6a492"/>
+		</linearGradient>
+		<linearGradient id="g2" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(540.026,0,0,6.276,129.901,648.796)">
+			<stop offset="0" stop-color="#fdd9b5"/>
+			<stop offset="1" stop-color="#b6a492"/>
+		</linearGradient>
+		<linearGradient id="g3" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(540.026,0,0,6.276,129.901,648.796)">
+			<stop offset="0" stop-color="#fdd9b5"/>
+			<stop offset="1" stop-color="#b6a492"/>
+		</linearGradient>
+		<linearGradient id="g4" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(194.696,0,0,3.571,302.168,776.817)">
+			<stop offset="0" stop-color="#fdd9b5"/>
+			<stop offset="1" stop-color="#b6a492"/>
+		</linearGradient>
+		<linearGradient id="g5" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(194.696,0,0,3.571,302.168,776.817)">
+			<stop offset="0" stop-color="#fdd9b5"/>
+			<stop offset="1" stop-color="#b6a492"/>
+		</linearGradient>
+		<linearGradient id="g6" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(364.766,0,0,5.568,218.229,714.257)">
+			<stop offset="0" stop-color="#fdd9b5"/>
+			<stop offset="1" stop-color="#b6a492"/>
+		</linearGradient>
+		<linearGradient id="g7" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(364.766,0,0,5.568,218.229,714.257)">
+			<stop offset="0" stop-color="#fdd9b5"/>
+			<stop offset="1" stop-color="#b6a492"/>
+		</linearGradient>
+		<linearGradient id="g8" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(357.48,0,0,309.586,221.519,354.637)">
+			<stop offset="0" stop-color="#fdd9b5"/>
+			<stop offset="1" stop-color="#b6a492"/>
+		</linearGradient>
+	</defs>
+	<style>
+		.s0 { fill: none;stroke: url(#g1);stroke-miterlimit:100;stroke-width: 35 } 
+		.s1 { fill: url(#g2);stroke: url(#g3);stroke-linecap: round;stroke-linejoin: round;stroke-width: 25 } 
+		.s2 { fill: url(#g4);stroke: url(#g5);stroke-linecap: round;stroke-linejoin: round;stroke-width: 25 } 
+		.s3 { fill: url(#g6);stroke: url(#g7);stroke-linecap: round;stroke-linejoin: round;stroke-width: 25 } 
+		.s4 { fill: none;stroke: url(#g8);stroke-miterlimit:100;stroke-width: 52 } 
+	</style>
+	<path id="Background" class="s0" d="m715.8 586.8h-631.3l315.6-546.7z"/>
+	<path id="форма 1" class="s1" d="m129.9 651.9v-6.2h540v6.2z"/>
+	<path id="Слой 2" class="s2" d="m302.2 778.6v-3.6h194.7v3.6z"/>
+	<path id="Слой 1" class="s3" d="m218.2 716.7v-5.2l364.8 0.4v5.1z"/>
+	<path id="Background copy" class="s4" d="m579 509.4h-357.5l178.8-309.6z"/>
+</svg>

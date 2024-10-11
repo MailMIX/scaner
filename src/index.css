@@ -1,0 +1,16 @@
+body {
+    background-color: #1f2229; 
+    margin: 0;
+    font-family: Tahoma;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #fff;
+  }
+  
+  code {
+font-family: Tahoma,    
+      monospace;
+  }
+  h4 {
+    text-align: center;
+}
