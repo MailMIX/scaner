@@ -17,7 +17,7 @@ function ScannerPage() {
         let data = {};
         let chunkIndex = 0;
         while (true) {
-          const response = await axios.get(`http://localhost:5000/api/scanner?chunk=${chunkIndex}`);
+          const response = await axios.get(`https://api.fansvor.ru/api/scanner?chunk=${chunkIndex}`);
           const chunk = await response.json();
           if (Object.keys(chunk).length === 0) {
             break;

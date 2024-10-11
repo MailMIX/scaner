@@ -14,7 +14,7 @@ const RegisterPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', { username, email, password }); 
+      const response = await axios.post('https://api.fansvor.ru/api/auth/register', { username, email, password }); 
       localStorage.setItem('token', response.data.token); //  Сохраняем  токен  в  localStorage
       navigate('/login'); //  Переходим  на  страницу  входа
     } catch (error) {

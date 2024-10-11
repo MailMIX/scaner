@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      axios.get('http://localhost:5000/api/auth/me', {
+      axios.get('https://api.fansvor.ru/api/auth/me', {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(res => {
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password, token) => { //  Добавляем  параметр  token
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { username, password }, {
+      const response = await axios.post('https://api.fansvor.ru/api/auth/login', { username, password }, {
         headers: {
           Authorization: token ? `Bearer ${token}` : undefined //  Отправляем  токен,  если  он  есть
         }

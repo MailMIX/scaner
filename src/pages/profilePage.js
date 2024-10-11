@@ -12,7 +12,7 @@ const ProfilePage = () => {
   useEffect(() => {
     if (user) {
       // Загрузка  данных  пользователя  с  backend
-      axios.get('http://localhost:5000/api/users/me', {
+      axios.get('https://api.fansvor.ru/api/users/me', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       })
         .then(res => {
@@ -33,7 +33,7 @@ const ProfilePage = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.put('http://localhost:5000/api/users/update', userData, {
+      const response = await axios.put('https://api.fansvor.ru/api/users/update', userData, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
 
