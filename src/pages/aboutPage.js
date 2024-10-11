@@ -8,7 +8,7 @@ const AboutPage = () => {
         О компании
       </Typography>
       <Typography variant="body1" gutterBottom>
-        Информация о компании ...
+        Информация о компании Fansvor
       </Typography>
     </div>
   );
