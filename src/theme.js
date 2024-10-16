@@ -28,7 +28,11 @@ const theme = createTheme({
     },
     body1: {
       fontSize: '1.1rem',
+      maxWidth: 1200,
     },
+    body2: {
+      maxWidth: 1200,
+    }
   },
 });
 

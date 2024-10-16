@@ -1,113 +1,88 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableContainer, TableHead, TableRow, TableCell, Paper, Typography, CircularProgress, Stack } from '@mui/material';
-import axios from 'axios';
+import { Table, TableBody, TableContainer, TableHead, TableRow, TableCell, Paper, Typography, Tooltip } from '@mui/material';
 
-const PARS_PER_PAGE = 50; // Количество пар на странице
-
-function ScannerPage() {
+const ScannerPage = () => {
   const [scannerData, setScannerData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       try {
-        // Получаем данные частями
-        let data = {};
-        let chunkIndex = 0;
-        while (true) {
-          const response = await axios.get(`https://api.fansvor.ru/api/scanner?chunk=${chunkIndex}`);
-          const chunk = await response.json();
-          if (Object.keys(chunk).length === 0) {
-            break;
-          }
-          data = { ...data, ...chunk };
-          chunkIndex++;
-
-          // Сортируем данные по прибыли
-          const sortedData = Object.entries(data).sort((a, b) => b[1].relativeProfit - a[1].relativeProfit);
-
-          // Преобразуем данные в массив для отображения в таблице
-          const scannerData = sortedData.map(([key, pairData]) => ({
-            ...pairData,
-            currencyPair: pairData.symbol, // Добавляем поле currencyPair
-          }));
-
-          setScannerData(scannerData);
+        const response = await fetch('https://api.fansvor.ru/api/scanner');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+        const data = await response.json();
+
+        // Обновляем состояние с полученными данными
+        setScannerData(data);
       } catch (error) {
-        console.error('Ошибка при получении данных сканера:', error);
+        console.error('Ошибка при получении данных: ', error);
       } finally {
+        // Завершаем загрузку
         setIsLoading(false);
       }
     };
 
-    fetchData();
-  }, []);
+    fetchData(); // Вызываем функцию для получения данных
+  }, []); // Зависимость пустая, чтобы сделать запрос только один раз при монтировании компонента
 
-  // Получаем данные для текущей страницы
-  const currentPars = scannerData.slice((currentPage - 1) * PARS_PER_PAGE, currentPage * PARS_PER_PAGE);
+  const renderNetworks = (networks) => {
+    if (!networks || networks.length === 0) {
+      return <span>Нет доступных сетей</span>; // Возвращаем текст, если нет сетей
+    }
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
+    return networks.map((network) => (
+      <Tooltip key={network.id} title={network.info ? network.info.network + ": " + (network.info.withdrawFee || 0) : ""} arrow>
+        <span style={{ color: network.deposit ? 'green' : 'red' }}>{network.network}</span>
+      </Tooltip>
+    ));
   };
-
+  
+  // Основной компонент для отображения результатов
   return (
-    <div>
+    <div style={{maxWidth: 1200}}>
       <Typography variant="h4" gutterBottom>
         Результаты сканирования
       </Typography>
       {isLoading ? (
-        <Stack sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-          <CircularProgress />
-        </Stack>
+        <Typography variant="h6">Загрузка...</Typography>
       ) : (
-        <>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left">Пара / Биржи</TableCell>
-                  <TableCell align="right">Прибыль (%)</TableCell>
-                  <TableCell align="right">Время жизни</TableCell>
-                  <TableCell align="right">Сеть</TableCell>
+        <TableContainer sx={{ minWidth: 1050 }} component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Валютная пара</TableCell>
+                <TableCell align="right">Биржа продажи</TableCell>
+                <TableCell align="right">Цена продажи</TableCell>
+                <TableCell align="right">Биржа покупки</TableCell>
+                <TableCell align="right">Цена покупки</TableCell>
+                <TableCell align="right">Профит (%)</TableCell>
+                <TableCell align="right">Сети депозита</TableCell>
+                <TableCell scope='row' align="right">Сети вывода</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {scannerData.map((row) => (
+                <TableRow key={row.symbol}>
+                  <TableCell component="th" scope="row">
+                    {row.symbol}
+                  </TableCell>
+                  <TableCell align="right">{row.exchangeSell}</TableCell>
+                  <TableCell align="right">{row.sellPrice}</TableCell>
+                  <TableCell align="right">{row.exchangeBuy}</TableCell>
+                  <TableCell align="right">{row.buyPrice}</TableCell>
+                  <TableCell align="right">{row.profitPercent.toFixed(2)}</TableCell>
+                  <TableCell align="right">{renderNetworks(row.networks.buyNetworks)}</TableCell> {/* Изменено на buyNetworks */}
+                  <TableCell align="right">{renderNetworks(row.networks.sellNetworks)}</TableCell> {/* Изменено на sellNetworks */}
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {currentPars.map((pair, index) => (
-                  <TableRow key={index}>
-                    <TableCell align='left'>
-                      <Typography variant="body2">
-                        {pair.currencyPair} / {pair.exchange1} - {pair.exchange2}
-                      </Typography>
-                      <Typography variant="body2">
-                        {pair.exchange1}: {pair.price1}
-                      </Typography>
-                      <Typography variant="body2">
-                        {pair.exchange2}: {pair.price2}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right">{pair.relativeProfit}%</TableCell>
-                    <TableCell align="right">{Math.round((Date.now() - pair.timestamp) / 60000)} мин.</TableCell> {/* Время жизни в минутах */}
-                    <TableCell align="right">
-                      {pair.networks && pair.networks.map((network, idx) => (
-                        <Typography key={idx} color={pair.networks[network].withdraw ? 'green' : 'red'}>
-                          {network}
-                        </Typography>
-                      ))}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          {/*  Дополнительно: Пагинация */}
-          {/*  Реализуйте компонент пагинации и передайте props currentPage и handlePageChange */}
-        </>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
     </div>
   );
-}
+};
 
 export default ScannerPage;

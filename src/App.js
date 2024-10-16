@@ -19,7 +19,7 @@ function App() {
       <AuthProvider> {/*  Оборачиваем  все  в  AuthProvider  */}
         <BrowserRouter>
           <ResponsiveAppBar />
-          <Container maxWidth="md">
+          <Container>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
